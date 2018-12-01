@@ -46,6 +46,9 @@ const MORSE_CODE = {
     "-...-": "="
 };
 
+//===========================================
+// MY SOLUTION
+//===========================================
 const decodeMorse = morseCode => {
     const decoded = [];
     const words = morseCode.split("   ");
@@ -58,7 +61,6 @@ const decodeMorse = morseCode => {
     });
     return decoded.join("").trim();
 };
-
 //===========================================
 // TEST CASE
 //===========================================
@@ -66,4 +68,43 @@ const decodeMorse = morseCode => {
 // console.log(decodeMorse("...."));
 
 // Actual
-console.log(decodeMorse(".... . -.--   .--- ..- -.. ."));
+// console.log(decodeMorse(".... . -.--   .--- ..- -.. ."));
+
+//===========================================
+// OPTIMIZATIONS ON MY SOLUTION
+//===========================================
+const decodeMorse3 = (morseCode, decodedString = "") => {
+    const words = morseCode.split("   ");
+    words.forEach(word => {
+        word.split(" ").forEach(letter => {
+            decodedString += MORSE_CODE[letter];
+        });
+        decodedString += " ";
+    });
+    return decodedString.trim();
+};
+console.log(decodeMorse3(".... . -.--   .--- ..- -.. ."));
+
+//===========================================
+// TOP SOLUTIONS BY OTHERS
+//===========================================
+decodeMorse2 = morseCode => {
+    decodeMorseLetter = letter => MORSE_CODE[letter];
+    decodeMorseWord = word =>
+        word
+            .split(" ")
+            .map(decodeMorseLetter)
+            .join("");
+    return morseCode
+        .trim()
+        .split("  ")
+        .map(decodeMorseWord)
+        .join(" ");
+};
+// console.log(decodeMorse2(".... . -.--   .--- ..- -.. ."));
+//===========================================
+// TAKEAWAYS -
+// 1) Love the usage of internal functions - improves code readability
+// 2) Clever, yet readable. Simple, yet elegant.
+// 3) Passing functions as callback parameter when mapping
+//===========================================
