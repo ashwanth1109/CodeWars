@@ -41,4 +41,36 @@ pickPeaks = (arr, pos = [], peaks = []) => {
     };
 };
 
-console.log(pickPeaks([3, 2, 3, 6, 4, 1, 2, 3, 2, 1, 2, 3]));
+//===========================================
+// TIME TO REFACTOR
+//===========================================
+//===========================================
+// MAYBE POSSIBLE TO USE REDUCE?
+//===========================================
+pickPeaks1 = arr => {
+    return ({ pos, peaks } = arr.reduce(
+        (acc, val) => {
+            if (acc.prevPrevValue !== null && acc.prevValue !== null) {
+                if (acc.prevValue > acc.prevPrevValue && acc.prevValue > val) {
+                    acc.peaks.push(acc.prevValue);
+                    acc.pos.push(acc.iter);
+                }
+            }
+            acc.prevPrevValue = acc.prevValue;
+            acc.prevValue = val;
+            acc.iter = acc.iter + 1;
+        },
+        {
+            prevPrevValue: null,
+            prevValue: null,
+            peaks: [],
+            pos: [],
+            iter: 0
+        }
+    ));
+};
+
+//===========================================
+// TEST CASE
+//===========================================
+console.log(pickPeaks1([3, 2, 3, 6, 4, 1, 2, 3, 2, 1, 2, 3]));
