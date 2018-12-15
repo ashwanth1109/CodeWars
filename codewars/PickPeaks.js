@@ -10,13 +10,28 @@ pickPeaks = (arr, pos = [], peaks = []) => {
     // const max = Math.max(...arr);
     // peaks.push(max);
     //===========================================
-    // OOPS, I MISREAD THE QUESTION. DAMN! SO MUCH FOR INSTINCTS
+    // OOPS, I MISREAD THE QUESTION. DAMN! SO MUCH FOR INSTINCTS -_-
     //===========================================
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] && arr[i + 1] && arr[i + 1]) {
-            if (arr[i] < arr[i + 1] && arr[i + 1] > arr[i + 2]) {
-                pos.push(i + 1);
-                peaks.push(arr[i + 1]);
+    for (let i = 1; i < arr.length - 1; i++) {
+        if (arr[i - 1] < arr[i] && arr[i] > arr[i + 1]) {
+            pos.push(i);
+            peaks.push(arr[i]);
+        } else if (arr[i - 1] < arr[i] && arr[i] === arr[i + 1]) {
+            //===========================================
+            // CHECK IF THIS IS A PLATEAU
+            //===========================================
+            let flag = i + 1;
+            while (arr[flag] && arr[flag + 1]) {
+                if (arr[flag] > arr[flag + 1]) {
+                    pos.push(i);
+                    peaks.push(arr[i]);
+                    break;
+                } else if (arr[flag] < arr[flag + 1]) {
+                    break;
+                } else {
+                    flag++;
+                    continue;
+                }
             }
         }
     }
