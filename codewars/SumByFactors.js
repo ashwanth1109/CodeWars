@@ -86,7 +86,7 @@ function sumOfDivided2(lst) {
 //===========================================
 // COOL SOLUTIONS BY OTHERS - 3
 //===========================================
-const sumOfDivided = a =>
+const sumOfDivided3 = a =>
     a
         .reduce((r, e) => r.concat(getFactors(e)), [])
         .filter((e, i, a) => i === a.indexOf(e))
