@@ -16,3 +16,25 @@ narcissistic = (n, pow = n.toString().length) => {
 // TEST CASES
 //===========================================
 console.log(narcissistic(153));
+
+//===========================================
+// COOL SOLUTIONS BY OTHERS - 1
+//===========================================
+function narcissistic1(value) {
+    return (
+        ("" + value).split("").reduce(function(p, c) {
+            return p + Math.pow(c, ("" + value).length);
+        }, 0) == value
+    );
+}
+
+//===========================================
+// COOL SOLUTIONS BY OTHERS - 2
+//===========================================
+narcissistic2 = num =>
+    num
+        .toString()
+        .split("")
+        .reduce(function(prev, el) {
+            return prev + Math.pow(el, String(num).length);
+        }, 0) == num;
