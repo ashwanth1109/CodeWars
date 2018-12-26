@@ -136,7 +136,39 @@ const first10Digits = numberSum
 // NEXT SOLUTION: TRY ADDING INDIVIDUAL DIGITS AND STORE THEM INSIDE AN ARRAY
 //===========================================
 
+const arrayOfNumbers = numberString
+    .split("\n")
+    .filter(numString => numString !== "");
+const arrayOfDigits = [];
+for (const element of arrayOfNumbers) {
+    arrayOfDigits.push(element.split(""));
+}
+const sumOfDigits = [];
+for (let i = 0; i < arrayOfDigits[0].length; i++) {
+    let sum = 0;
+    for (let j = 0; j < arrayOfDigits.length; j++) {
+        sum += Number(arrayOfDigits[j][i]);
+    }
+    sumOfDigits.push(sum);
+}
+
+let newSumOfDigits = [];
+
+let carryOver = 0;
+for (let i = sumOfDigits.length - 1; i >= 0; i--) {
+    const temp = sumOfDigits[i] + carryOver;
+    newSumOfDigits.unshift((temp % 10).toString());
+    carryOver = Math.floor(temp / 10);
+}
+newSumOfDigits.unshift(carryOver.toString());
+
+const requiredLength = 10 - newSumOfDigits[0].length;
+const firstTenDigits = newSumOfDigits.slice(0, requiredLength + 1).join("");
 //===========================================
 // OUTPUT
 //===========================================
-console.log(first10Digits);
+console.log(firstTenDigits);
+//===========================================
+// SOLUTION IS CORRECT: YAY. Apparently, I was off by one digit with the previous method.
+// Come back and try to figure out why that was?
+//===========================================
