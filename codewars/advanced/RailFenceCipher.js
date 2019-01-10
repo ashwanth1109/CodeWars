@@ -67,8 +67,51 @@ encodeRailFenceCipher = (string, numberRails) => {
     return encodedString;
 };
 
+// ------------------------------------------------------------
+// made it work for a 3 rail case. need to tweak midPart stuff to make it work for general case
+// ------------------------------------------------------------
 decodeRailFenceCipher = (string, numberRails) => {
-    //
+    // ------------------------------------------------------------
+    // get remainder from dividing by 4
+    // ------------------------------------------------------------
+    const remainder = string.length % 4;
+    // ------------------------------------------------------------
+    // split string into the rails
+    // ------------------------------------------------------------
+    let topPartLength, botPartLength, midPartLength;
+    topPartLength = botPartLength = (string.length - remainder) / 4;
+    midPartLength = topPartLength * 2;
+    switch (remainder) {
+        case 3:
+            botPartLength++;
+        case 2:
+            midPartLength++;
+        case 1:
+            topPartLength++;
+        default:
+            break;
+    }
+    let arrOfArrays = [];
+    for (let i = 0; i < numberRails; i++) {
+        arrOfArrays.push([]);
+    }
+    // ------------------------------------------------------------
+    // extract top part
+    // ------------------------------------------------------------
+    arrOfArrays[0].push(string.substr(0, topPartLength));
+    // ------------------------------------------------------------
+    // extract bot part
+    // ------------------------------------------------------------
+    arrOfArrays[arrOfArrays.length - 1].push(
+        string.substr(string.length - botPartLength, botPartLength)
+    );
+    // ------------------------------------------------------------
+    // extract mid part
+    // ------------------------------------------------------------
+    arrOfArrays[1].push(string.substr(topPartLength, midPartLength));
+    return arrOfArrays;
 };
 
 console.log(encodeRailFenceCipher("WEAREDISCOVEREDFLEEATONCE", 3));
+console.log(encodeRailFenceCipher("Hello, World!", 3));
+console.log(decodeRailFenceCipher("WECRLTEERDSOEEFEAOCAIVDEN", 3));
